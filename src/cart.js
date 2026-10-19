@@ -23,7 +23,13 @@ function addToCart(cart, product, quantity) {
   return cart.map((item) => (item.id === product.id ? { ...item, quantity: requested } : item));
 }
 
-function changeQuantity() { return notImplemented(); }
+function changeQuantity(cart, productId, quantity) {
+  const existing = cart.find((item) => item.id === productId);
+  if (!existing) return cart;
+  assertPositiveQuantity(quantity);
+  assertInStock(quantity, existing.stock);
+  return cart.map((item) => (item.id === productId ? { ...item, quantity } : item));
+}
 function removeFromCart() { return notImplemented(); }
 function calculateCartSubtotal() { return notImplemented(); }
 function calculateOrderTotal() { return notImplemented(); }
